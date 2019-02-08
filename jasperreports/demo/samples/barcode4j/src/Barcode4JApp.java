@@ -155,7 +155,7 @@ public class Barcode4JApp extends AbstractSampleApp
 		configuration.setPrintRequestAttributeSet(printRequestAttributeSet);
 		configuration.setPrintServiceAttributeSet(printServiceAttributeSet);
 		configuration.setDisplayPageDialog(false);
-		configuration.setDisplayPrintDialog(true);
+		configuration.setDisplayPrintDialog(false);
 		exporter.setConfiguration(configuration);
 		exporter.exportReport();
 
