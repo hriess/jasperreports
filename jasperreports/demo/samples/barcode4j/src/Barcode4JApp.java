@@ -48,6 +48,38 @@ import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.PrinterName;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRPrintImage;
+import net.sf.jasperreports.engine.JRPrintLine;
+import net.sf.jasperreports.engine.JRPrintPage;
+import net.sf.jasperreports.engine.JRPrintText;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.base.JRBasePrintImage;
+import net.sf.jasperreports.engine.base.JRBasePrintLine;
+import net.sf.jasperreports.engine.base.JRBasePrintPage;
+import net.sf.jasperreports.engine.base.JRBasePrintText;
+import net.sf.jasperreports.engine.design.JRDesignStyle;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.type.HorizontalTextAlignEnum;
+import net.sf.jasperreports.engine.type.ScaleImageEnum;
+import net.sf.jasperreports.engine.util.AbstractSampleApp;
+import net.sf.jasperreports.engine.util.JRSaver;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimplePrintServiceExporterConfiguration;
+import net.sf.jasperreports.renderers.ResourceRenderer;
+
+
+
 /**
  * @author Teodor Danciu (teodord@users.sourceforge.net)
  */
@@ -99,9 +131,37 @@ public class Barcode4JApp extends AbstractSampleApp
 	 */
 	public void print() throws JRException
 	{
+		/*
 		long start = System.currentTimeMillis();
 		JasperPrintManager.printReport("build/reports/Barcode4JReport.jrprint", true);
 		System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+		*/
+		
+		long start = System.currentTimeMillis();
+		PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+		printRequestAttributeSet.add(MediaSizeName.ISO_A4);
+
+		PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+		//printServiceAttributeSet.add(new PrinterName("Epson Stylus 820 ESC/P 2", null));
+		//printServiceAttributeSet.add(new PrinterName("hp LaserJet 1320 PCL 6", null));
+		//printServiceAttributeSet.add(new PrinterName("PDFCreator", null));
+		printServiceAttributeSet.add(new PrinterName("Brother HL-2130 series", null));
+		
+		JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+		
+		// exporter.setExporterInput(new SimpleExporterInput("build/reports/PrintServiceReport.jrprint"));
+		exporter.setExporterInput(new SimpleExporterInput("build/reports/Barcode4JReport.jrprint"));
+		SimplePrintServiceExporterConfiguration configuration = new SimplePrintServiceExporterConfiguration();
+		configuration.setPrintRequestAttributeSet(printRequestAttributeSet);
+		configuration.setPrintServiceAttributeSet(printServiceAttributeSet);
+		configuration.setDisplayPageDialog(false);
+		configuration.setDisplayPrintDialog(true);
+		exporter.setConfiguration(configuration);
+		exporter.exportReport();
+
+		System.err.println("Printing time : " + (System.currentTimeMillis() - start));	
+		
+		
 	}
 	
 	
