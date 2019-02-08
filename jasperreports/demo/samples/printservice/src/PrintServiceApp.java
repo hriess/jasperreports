@@ -30,6 +30,7 @@ import javax.print.attribute.HashPrintServiceAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.PrinterName;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintImage;
@@ -99,6 +100,7 @@ public class PrintServiceApp extends AbstractSampleApp
 		//printServiceAttributeSet.add(new PrinterName("Epson Stylus 820 ESC/P 2", null));
 		//printServiceAttributeSet.add(new PrinterName("hp LaserJet 1320 PCL 6", null));
 		//printServiceAttributeSet.add(new PrinterName("PDFCreator", null));
+		printServiceAttributeSet.add(new PrinterName("Brother HL-2130 series", null));
 		
 		JRPrintServiceExporter exporter = new JRPrintServiceExporter();
 		
@@ -107,7 +109,7 @@ public class PrintServiceApp extends AbstractSampleApp
 		configuration.setPrintRequestAttributeSet(printRequestAttributeSet);
 		configuration.setPrintServiceAttributeSet(printServiceAttributeSet);
 		configuration.setDisplayPageDialog(false);
-		configuration.setDisplayPrintDialog(true);
+		configuration.setDisplayPrintDialog(false);
 		exporter.setConfiguration(configuration);
 		exporter.exportReport();
 
