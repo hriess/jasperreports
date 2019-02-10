@@ -102,6 +102,10 @@
 	<target name="clean" description="Deletes all the generated files.">
 		<ant dir="../" target="clean-sample"/>
 	</target>
+	
+	<target name="retrievelibs" description="Retrieve dependencies with Apache Ivy">
+		<ivy:retrieve conf="compile, javaflow, test" pattern="dist/lib/[artifact](-[classifier])-[revision].[ext]"/>
+	</target>	
 
 	<target name="test" description="Runs the sample.">
 		<echo message="==================================="/>
